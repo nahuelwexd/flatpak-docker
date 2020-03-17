@@ -40,7 +40,7 @@ do
 done
 
 # Based on https://gitlab.gnome.org/GNOME/citemplates/raw/master/flatpak/flatpak_ci_initiative.yml
-flatpak-builder --user --disable-rofiles-fuse --stop-at="${FLATPAK_MODULE}" flatpak_app "${MANIFEST_PATH}"
+flatpak-builder --user --disable-rofiles-fuse --stop-at="${FLATPAK_MODULE}" flatpak_app "${MANIFEST_PATH}" --install-deps-from=flathub
 
 flatpak build flatpak_app meson --prefix=/app ${MESON_ARGS} _build
 flatpak build flatpak_app ninja -C _build install
