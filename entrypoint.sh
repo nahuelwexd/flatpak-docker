@@ -42,7 +42,7 @@ done
 # Based on https://gitlab.gnome.org/GNOME/citemplates/raw/master/flatpak/flatpak_ci_initiative.yml
 flatpak-builder --user --disable-rofiles-fuse --stop-at="${FLATPAK_MODULE}" flatpak_app "${MANIFEST_PATH}"
 
-flatpak build flatpak_app meson --prefix=/app "${MESON_ARGS}" _build
+flatpak build flatpak_app meson --prefix=/app ${MESON_ARGS} _build
 flatpak build flatpak_app ninja -C _build install
 
 flatpak build flatpak_app bash -c \
@@ -104,10 +104,10 @@ xvfb-run -a -s "-screen 0 1024x768x24" \
 flatpak build \
 --env=LANG=C.UTF-8 \
 --env=NO_AT_BRIDGE=1 \
-"${TEST_BUILD_ARGS}" \
+${TEST_BUILD_ARGS} \
 flatpak_app \
 dbus-run-session \
-meson test -C _build --no-stdsplit --print-errorlogs "${TEST_RUN_ARGS}"
+meson test -C _build --no-stdsplit --print-errorlogs ${TEST_RUN_ARGS}
 
 flatpak build-bundle repo "${BUNDLE}" --runtime-repo="${RUNTIME_REPO}" "${APP_ID}" "${BRANCH}"
 tar cf repo.tar repo/
