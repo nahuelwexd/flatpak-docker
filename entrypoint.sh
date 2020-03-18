@@ -57,7 +57,7 @@ do
 done"
 
 flatpak build flatpak_app bash -c \
-"find /app -type f 'c' -perm -111 -o -name '*.so*' ')' -print0 | while read -r -d $'\\0' file
+"find /app -type f '(' -perm -111 -o -name '*.so*' ')' -print0 | while read -r -d $'\\0' file
 do
   read -n4 hdr < \${file} || continue
   if [ \"\$hdr\" != \$(printf \\\\x7fELF) ]
