@@ -6,7 +6,7 @@ RUN dnf install -y flatpak flatpak-builder
 # Setup Flathub
 RUN flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
-RUN flatpak install -y --noninteractive flathub org.freedesktop.Platform//19.08 org.freedesktop.Sdk//19.08
+RUN flatpak install -y --noninteractive flathub org.gnome.Sdk//3.36 org.gnome.Platform//3.36
 
 ADD entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["sh", "/entrypoint.sh"]
