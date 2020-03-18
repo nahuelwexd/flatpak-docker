@@ -40,7 +40,7 @@ do
 done
 
 # Based on https://gitlab.gnome.org/GNOME/citemplates/raw/master/flatpak/flatpak_ci_initiative.yml
-flatpak-builder --user --disable-rofiles-fuse --stop-at="${FLATPAK_MODULE}" flatpak_app "${MANIFEST_PATH}" --install-deps-from=flathub
+flatpak-builder --disable-rofiles-fuse --stop-at="${FLATPAK_MODULE}" flatpak_app "${MANIFEST_PATH}" --install-deps-from=flathub
 
 flatpak build flatpak_app meson --prefix=/app ${MESON_ARGS} _build
 flatpak build flatpak_app ninja -C _build install
@@ -98,7 +98,7 @@ do
 done"
 
 
-flatpak-builder --user --disable-rofiles-fuse --finish-only --repo=repo "${BRANCH:+--default-branch=$BRANCH}" flatpak_app "${MANIFEST_PATH}"
+flatpak-builder --disable-rofiles-fuse --finish-only --repo=repo "${BRANCH:+--default-branch=$BRANCH}" flatpak_app "${MANIFEST_PATH}"
 
 xvfb-run -a -s "-screen 0 1024x768x24" \
 flatpak build \
