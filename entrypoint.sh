@@ -40,19 +40,19 @@ do
 done
 
 # Based on https://gitlab.gnome.org/GNOME/citemplates/raw/master/flatpak/flatpak_ci_initiative.yml
-flatpak-builder --user --disable-rofiles-fuse --stop-at="${FLATPAK_MODULE}" flatpak_app "${MANIFEST_PATH}"
+flatpak-builder --user --stop-at="${FLATPAK_MODULE}" flatpak_app "${MANIFEST_PATH}"
 
 flatpak build flatpak_app meson --prefix=/app ${MESON_ARGS} _build
 flatpak build flatpak_app ninja -C _build install
 
 flatpak build flatpak_app bash -c \
-"for lang in \$(ls /app/share/locale/)
+"for lang in \$(ls /app/share/locale)
 do
-  ll = \$(echo \${lang} | egrep -o '^[a-z]+')
+  ll=\$(echo \${lang} | egrep -o '^[a-z]+')
   test \${ll} == en && continue
   test -L /app/share/locale/\${lang} && continue
   mkdir -p /app/share/runtime/locale/\${ll}/share
-  mv /app/share/locale/\${lang} /app/share/runtime/locale/\${ll}/share/
+  mv /app/share/locale/\${lang} /app/share/runtime/locale/\${ll}/share
   ln -s ../../share/runtime/locale/\${ll}/share/\${lang} /app/share/locale
 done"
 
@@ -73,12 +73,12 @@ do
   esac
   debugedit -i --list-file=source-files.part --base-dir=\${PWD} --dest-dir=/app/lib/debug/source/${FLATPAK_MODULE} \${file} &> /dev/null
   cat source-files.part >> source-files
-  realpath = \$(realpath -s --relative-to=/app \${file})
-  debugfile = /app/lib/debug/\${realpath}.debug
+  realpath=\$(realpath -s --relative-to=/app \${file})
+  debugfile=/app/lib/debug/\${realpath}.debug
   mkdir -p \$(dirname \${debugfile})
   objcopy --only-keep-debug --compress-debug-sections \${file} \${debugfile}
   chmod 644 \${debugfile}
-  mode = \$(stat -c 0%a \${file})
+  mode=\$(stat -c 0%a \${file})
   [ -w \${file} ] || chmod +w \${file}
   strip --remove-section=.comment --remove-section=.note --strip-unneeded --remove-section=.gnu_debugaltlink \${file}
   objcopy --add-gnu-debuglink \${debugfile} \${file}
@@ -86,8 +86,8 @@ do
 done
 sort -zu < source-files | while read -r -d \$'\\0' source
 do
-  dst = /app/lib/debug/source/${FLATPAK_MODULE}/\${source}
-  src = \${source}
+  dst=/app/lib/debug/source/${FLATPAK_MODULE}/\${source}
+  src=\${source}
   if [ -d \${src} ]
   then
     install -m0755 -d \${dst}
@@ -98,7 +98,7 @@ do
 done"
 
 
-flatpak-builder --user --disable-rofiles-fuse --finish-only --repo=repo "${BRANCH:+--default-branch=$BRANCH}" flatpak_app "${MANIFEST_PATH}"
+flatpak-builder --user --finish-only --repo=repo ${BRANCH:+--default-branch=$BRANCH} flatpak_app "${MANIFEST_PATH}"
 
 xvfb-run -a -s "-screen 0 1024x768x24" \
 flatpak build \
@@ -109,5 +109,5 @@ flatpak_app \
 dbus-run-session \
 meson test -C _build --no-stdsplit --print-errorlogs ${TEST_RUN_ARGS}
 
-flatpak build-bundle repo "${BUNDLE}" --runtime-repo="${RUNTIME_REPO}" "${APP_ID}" "${BRANCH}"
+flatpak build-bundle repo "${BUNDLE}" --runtime-repo="${RUNTIME_REPO}" ${APP_ID} ${BRANCH}
 tar cf repo.tar repo/

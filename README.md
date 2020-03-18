@@ -25,11 +25,12 @@ arguments described below:
 E.g.:
 
 ```sh
-docker run -v "/home/myuser/myproject":"/myproject" --rm -i nahuelwexd/flatpak-docker \
-  --manifest-path "/myproject/build-aux/org.example.MyProject.json" \
-  --meson-args "-Dprofile=development" \
-  --flatpak-module "myproject" \
-  --app-id "org.example.MyProject.Devel" \
-  --runtime-repo "https://flathub.org/repo/flathub.flatpakrepo" \
-  --bundle "org.example.MyProject.Devel.flatpak"
+docker run -v /home/myuser/myproject:/myproject --rm -i \
+--workdir /myproject --privileged nahuelwexd/flatpak-docker \
+  --manifest-path /myproject/build-aux/org.example.MyProject.json \
+  --meson-args -Dprofile=development \
+  --flatpak-module myproject \
+  --app-id org.example.MyProject.Devel \
+  --runtime-repo https://flathub.org/repo/flathub.flatpakrepo \
+  --bundle org.example.MyProject.Devel.flatpak
 ```
