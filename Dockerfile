@@ -8,6 +8,8 @@ RUN flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.
 
 RUN flatpak install -y --noninteractive flathub org.gnome.Sdk//3.36 org.gnome.Platform//3.36
 
+RUN chown -R builduser:builduser $(pwd)
+
 # Create a non-root user
 RUN useradd builduser
 USER builduser
