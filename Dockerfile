@@ -12,6 +12,9 @@ RUN flatpak install -y --noninteractive flathub org.gnome.Sdk//3.36 org.gnome.Pl
 # Create a non-root user
 RUN useradd builduser
 
+# Set the builduser's home as workdir
+WORKDIR /home/builduser
+
 ADD entrypoint.sh /entrypoint.sh
 ADD build-flatpak.sh /build-flatpak.sh
 ENTRYPOINT ["sh", "/entrypoint.sh"]
